@@ -10,7 +10,7 @@ WiFiClient client;
 unsigned long lastTime = 0;
 unsigned long timerDelay = 30000;
 
-int AGSM_gas_value[8]={0}; //PPM
+int AGSM_gas_value[8]={0}; 
 
 const char* myWriteAPIKey_agsm_co_so2 = "your write apikey"; 
 unsigned long myChannelNumber_agsm_co_so2 = your channelnumber;  
@@ -20,17 +20,18 @@ unsigned long myChannelNumber_agsm_co_so2 = your channelnumber;
 const int BUFFER_SIZE = 100;
 char buf[BUFFER_SIZE];
 int inByte = 0;
-char tempChars[100];     // temporary array for use when parsing
+char tempChars[100];    
 int ppb=0;
 float ppm=0.000;
 float temp=0;
 float rh=0;
 int Serial_number=0;
-int ADC_value; // DGSM Module adc value
+int ADC_value; // AGSM Module adc value
+
 void setup()
 {
-  Serial.begin(115200);   // GPIO1, GPIO3 (TX/RX pin on ESP-12E Development Board)
-  Serial2.begin(9600);  // GPIO2 (D4 pin on ESP-12E Development Board)
+  Serial.begin(115200);  
+  Serial2.begin(9600);  
 
   #if ContinueMode
   Serial.println("Continuous Mode");
@@ -65,17 +66,10 @@ void parseData()
         rh = atoi(strtokIndx);  
 
         strtokIndx = strtok(NULL, ",");
-        ADC_value = atoi(strtokIndx);  
-
-        // strtokIndx = strtok(NULL, ","); 
-        // temp = atoi(strtokIndx);  
-
-        // strtokIndx = strtok(NULL, ","); 
-        // rh = atoi(strtokIndx);
-          AGSM_gas_value[0]=(float)(ppb);
-
-        // Serial.print(" Serial_number = ");
-        // Serial.print(Serial_number);   
+        ADC_value = atoi(strtokIndx); 
+	
+        AGSM_gas_value[0]=(float)(ppb);
+   
         Serial.print("   ppb= ");
         Serial.print(ppb);
         Serial.print("  Temperature= ");
@@ -86,7 +80,6 @@ void parseData()
         Serial.print(ADC_value);
         Serial.println(" ");
 
-
     for(int i=0; i<inByte;i++)
 		buf[i]=0;
 }
@@ -94,11 +87,8 @@ void loop()
 {
    while (Serial2.available()) // read from AGSM port, send to Serial port to interupt continuous output send 'c''/r' without line ending, may have to send more than once.
   {
-    #if 1
         inByte = Serial2.readBytesUntil('\n', buf, BUFFER_SIZE);
         parseData(); 
-    #endif
-
   }
   if ((millis() - lastTime) > timerDelay) 
   {
