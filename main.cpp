@@ -2,8 +2,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include "ThingSpeak.h"
-#define WIFI_SSID                "Allsensing_D24"       //Wifi 설정
-#define WIFI_PASSWORD            "allsensing#"          //Wifi 설정
+#define WIFI_SSID                "your wifi ssid"       //Wifi 설정
+#define WIFI_PASSWORD            "your wifi pass"          //Wifi 설정
 WiFiClient client;
 
 // Timer variables
@@ -12,8 +12,8 @@ unsigned long timerDelay = 30000;
 
 int AGSM_gas_value[8]={0}; //PPM
 
-const char* myWriteAPIKey_agsm_co_so2 = "6FHKALB483CMZOWA"; 
-unsigned long myChannelNumber_agsm_co_so2 = 1771883;  
+const char* myWriteAPIKey_agsm_co_so2 = "your write apikey"; 
+unsigned long myChannelNumber_agsm_co_so2 = your channelnumber;  
 
 #define ContinueMode 1
 #define PollingMode 0
@@ -73,7 +73,7 @@ void parseData()
         // strtokIndx = strtok(NULL, ","); 
         // rh = atoi(strtokIndx);
           AGSM_gas_value[0]=(float)(ppb);
-    #if 1 
+
         // Serial.print(" Serial_number = ");
         // Serial.print(Serial_number);   
         Serial.print("   ppb= ");
@@ -85,7 +85,7 @@ void parseData()
         Serial.print("  ADC= ");
         Serial.print(ADC_value);
         Serial.println(" ");
-    #endif
+
 
     for(int i=0; i<inByte;i++)
 		buf[i]=0;
@@ -99,16 +99,6 @@ void loop()
         parseData(); 
     #endif
 
-    #if 0
-    // prints the received data
-    Serial.print("I received: ");
-    for(int i = 0; i < rlen; i++)
-      Serial.print(buf[i]);
-    #endif
-    #if 0
-    inByte = Serial2.read();
-    Serial.write(inByte);
-    #endif
   }
   if ((millis() - lastTime) > timerDelay) 
   {
