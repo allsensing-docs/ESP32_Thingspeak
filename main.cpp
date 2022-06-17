@@ -2,8 +2,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include "ThingSpeak.h"
-#define WIFI_SSID                "your wifi ssid"       //Wifi 설정
-#define WIFI_PASSWORD            "your wifi pass"          //Wifi 설정
+#define WIFI_SSID                "your wifi ssid"       
+#define WIFI_PASSWORD            "your wifi pass"          
 WiFiClient client;
 
 // Timer variables
@@ -12,8 +12,8 @@ unsigned long timerDelay = 30000;
 
 int AGSM_gas_value[8]={0}; 
 
-const char* myWriteAPIKey_agsm_co_so2 = "your write apikey"; 
-unsigned long myChannelNumber_agsm_co_so2 = your channelnumber;  
+const char* myWriteAPIKey = "your write apikey"; 
+unsigned long myChannelNumber = "your channelnumber";  
 
 #define ContinueMode 1
 #define PollingMode 0
@@ -105,7 +105,7 @@ void loop()
     { 
        // set the fields with the values
       ThingSpeak.setField(1, AGSM_gas_value[0]);
-      int x = ThingSpeak.writeFields(myChannelNumber_agsm_co_so2, myWriteAPIKey_agsm_co_so2);
+      int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
       if(x == 200){
       Serial.println("Channel update successful.");
       }
