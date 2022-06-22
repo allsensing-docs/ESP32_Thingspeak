@@ -2,16 +2,19 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include "ThingSpeak.h"
+// WIFI Settings
 #define WIFI_SSID                "your wifi ssid"       
-#define WIFI_PASSWORD            "your wifi pass"          
+#define WIFI_PASSWORD            "your wifi pass"
+
 WiFiClient client;
 
-// Timer variables
+// Thingspeak Timer variables
 unsigned long lastTime = 0;
 unsigned long timerDelay = 30000;
 
 int AGSM_gas_value[8]={0}; 
 
+// Thingspeak interface
 const char* myWriteAPIKey = "your write apikey"; 
 unsigned long myChannelNumber = "your channelnumber";  
 
@@ -52,7 +55,7 @@ void parseData()
     char * strtokIndx; // this is used by strtok() as an index
     //SN [XXXXXXXXXXXX], PPB [0 : 999999], TEMP [-99 : 99], RH [0 : 99], RawSensor[ADCCount], TempDigital, RHDigital, Day [0 : 99], Hour [0 : 23], Minute [0 : 59], Second [0 : 59]
 
-    //length는 가변 LEN= 50 DATA= 071421030446, 875, 23, 19, 2111737, 23956, 19605
+    //length is variable LEN= 50 DATA= 071421030446, 875, 23, 19, 2111737, 23956, 19605
         strtokIndx = strtok(buf,",");      // get the first part - the string
         Serial_number = atoi(strtokIndx); 
 
@@ -69,7 +72,8 @@ void parseData()
         ADC_value = atoi(strtokIndx); 
 	
         AGSM_gas_value[0]=(float)(ppb);
-   
+	
+   	// AGSM Module data
         Serial.print("   ppb= ");
         Serial.print(ppb);
         Serial.print("  Temperature= ");
